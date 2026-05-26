@@ -3,6 +3,7 @@ Name: Benjamin Nguyen
 Date: 5/25/2026
 Short Description: This program will calculate the index statement from your bank statement
 """
+import csv
 
 def description():
     print('Based of user input of the file location that lists the bank statement, this program will calculate the index.')
@@ -19,24 +20,29 @@ def read_file():
     while True:
         try:
             print()
+            file_list = []
             file_name = input('Please enter the file name of the bank statement: ')
-            with open(file_name) as OpenFile:
-                file_lines = OpenFile.readlines()
-            return file_lines
+            with open(file_name) as open_file:
+                file_lines = csv.reader(open_file)
+                for row in file_lines:
+                    file_list.append(row)
+            return file_list
         except FileNotFoundError:
             print('Please enter another csv file name again')
 
 def bank_display(numbers):
-    for i in range(len(numbers)):
-        pass
+    print(numbers)
+
 
 if __name__ == "__main__":
     description()
     print()
     selection = menu()
 
-    if selection == 1:
-        raw_statement = read_file()
-    if selection == 2:
-        bank_display(raw_statement)
+    while selection != 5:
+        if selection == 1:
+            raw_statement = read_file()
+        if selection == 2:
+            bank_display(raw_statement)
+        selection = menu()
 
