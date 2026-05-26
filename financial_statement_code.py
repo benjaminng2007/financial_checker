@@ -26,7 +26,7 @@ def read_file():
         try:
             print()
             file_list = []
-            file_name = 'C:\\Fake Bank Statement for Project Example\\Fake Bank Statement.csv'
+            file_name = input('Please enter your file name: ')
             # input('Please enter the file name of the bank statement: '))
             with open(file_name) as open_file:
                 file_contents = csv.reader(open_file)
