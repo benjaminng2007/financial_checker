@@ -1,0 +1,11 @@
+Date,Transaction ID,Description,Category,Debit,Credit,Balance
+5/1/2024,TXN1001,Opening Balance,Balance,,1500,1500
+5/3/2024,TXN1002,Grocery Store - Market Fresh,Food,45.2,,1454.8
+5/5/2024,TXN1003,Payroll Deposit - ABC Corp,Income,,2200,3654.8
+5/7/2024,TXN1004,Monthly Rent Payment,Housing,1200,,2454.8
+5/10/2024,TXN1005,Online Subscription ,Entertainment,14.99,,2439.81
+5/12/2024,TXN1006,Coffee Shop - Java Beans,Food,5.5,,2434.31
+5/15/2024,TXN1007,Gas Station - Fuel Up,Transport,55,,2379.31
+5/20/2024,TXN1008,Freelance Payment - Client X,Income,,450,2829.31
+5/22/2024,TXN1009,Electricity Bill - City Power,Utilities,85.4,,2743.91
+5/25/2024,TXN1010,Pharmacy - Health Plus,Healthcare,22.15,,2721.76
