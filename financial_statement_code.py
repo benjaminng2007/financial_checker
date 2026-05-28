@@ -12,6 +12,8 @@ def description():
     print('Based of user input of the file location that lists the bank statement, this program will calculate the index.')
     print('Housing, Utilities and Online Subscriptions is only accounted into the index score')
     print('Example Fake Bank Statement I used is in the github commited to the main branch')
+    print(
+        'The file name should be copied as a path in your files for example C:\\Fake Bank Statement for Project Example\\Fake Bank Statement.csv then entered into terminal')
 
 # gives the user a menu to choose a selection, in which returns the selection to main
 def menu():
