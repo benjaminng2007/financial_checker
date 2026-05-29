@@ -1,7 +1,7 @@
 """
 Name: Benjamin Nguyen
 Date: 5/25/2026
-Short Description: This program will calculate the index statement from your bank statement
+Short Description: This program will calculate the index statement from your bank statement and display it
 """
 
 import csv
@@ -16,12 +16,14 @@ def description():
 
 # gives the user a menu to choose a selection, in which returns the selection to main
 def menu():
+    print('\n----------------------------------------------------')
     print('Type 1 to enter the file name of the bank statement and read its contents')
     print('Type 2 to display the contents of the banks statement')
     print('Type 3 to calculate the index of the file name and display it')
     print('Type 4 to end the program')
-    print()
+    print('----------------------------------------------------')
     choice = int(input('Please enter your choice: '))
+    print()
     return choice
 
 # reads the file and returns a 2d list of the contents of the file before closing it
@@ -70,21 +72,33 @@ def bank_display(list2d):
         print(row_string)
 
 def calculate_index(contents):
-    income_row = []
     debt_row = []
 
-    #detects if the category is an income and adds it to the income_row list to only allow income rows
+
     for row in contents:
-        if 'Income' in row or 'Deposit' in row:
-            income_row.append(row)
         #detects if the category is a debt and adds it to debt_row to allow only debt rows
-        elif 'Housing' in row or 'Utilities' in row or 'Online Subscriptions' in row:
+        if 'Housing' in row or 'Utilities' in row or 'Online Subscriptions' in row:
             debt_row.append(row)
 
-    #only adds the income to the net income
+    #only adds the income to the net income by determining the difference in previous balances and after balances
+    totals = []
     net_income = 0
-    for positive_money in income_row:
-        net_income += float(positive_money[5])
+
+    for row in contents:
+        totals.append(row[6])
+
+    totals.pop(0)
+
+    for i in range(1, len(totals)):
+        after_totals = float(totals[i])
+        before_totals = float(totals[i - 1])
+        print(after_totals, before_totals)
+
+        difference = after_totals - before_totals
+        print(difference)
+
+        if difference > 0:
+            net_income += difference
 
     #Estimates the gross income based of the net income using the formula of the net_income / (1-0.25)
     gross_income = net_income / (1-0.25)
@@ -98,28 +112,27 @@ def calculate_index(contents):
     index_score = (debt / gross_income) * 100
     return f'{index_score:.2f}'
 
-
 # Where all the functions are called
 if __name__ == "__main__":
     description()
     print()
     selection = menu()
-    flag = 0
+    raw_statement = 0
 
     #determines when to selection is over and when the other functions are called
     while selection != 4:
         if selection == 1:
             raw_statement = read_file()
-            flag = 1
+
         elif selection == 2:
-            if flag == 0:
+            if raw_statement == 0:
                 print('Must choose choice 1 first')
             else:
                 print()
                 bank_display(raw_statement)
                 print()
         elif selection == 3:
-            if flag == 0:
+            if raw_statement == 0:
                 print('Must choose choice 1 first')
             else:
                 score = calculate_index(raw_statement)
