@@ -15,7 +15,7 @@ def description():
     print('The file name should be copied as a path in your files for example C:\\Fake Bank Statement for Project Example\\Fake Bank Statement.csv then entered into terminal')
 
 # gives the user a menu to choose a selection, in which returns the selection to main
-def menu():
+def menu_choice():
     print('\n----------------------------------------------------')
     print('Type 1 to enter the file name of the bank statement and read its contents')
     print('Type 2 to display the contents of the banks statement')
@@ -23,8 +23,8 @@ def menu():
     print('Type 4 to end the program')
     print('----------------------------------------------------')
     choice = int(input('Please enter your choice: '))
-    print()
     return choice
+    
 
 # reads the file and returns a 2d list of the contents of the file before closing it
 # checks if the file is found in the system and also tells the user to input the correct file name again
@@ -112,14 +112,14 @@ def calculate_index(contents):
     index_score = (debt / gross_income) * 100
     return f'{index_score:.2f}'
 
-# Where all the functions are called
-if __name__ == "__main__":
+
+def main():
     description()
     print()
-    selection = menu()
-    raw_statement = 0
+    selection = menu_choice()
+    raw_statement = None
 
-    #determines when to selection is over and when the other functions are called
+    # determines when to selection is over and when the other functions are called
     while selection != 4:
         if selection == 1:
             raw_statement = read_file()
@@ -140,8 +140,13 @@ if __name__ == "__main__":
                 print(f'Your index score is: {score}')
                 print()
 
-        #Goes back to the menu after each function is done
-        selection = menu()
+        # Goes back to the menu after each function is done
+        selection = menu_choice()
     print()
     print('Thank you for using this program')
+
+
+# Where all the functions are called
+if __name__ == "__main__":
+    main()
 
