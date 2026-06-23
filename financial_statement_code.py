@@ -32,7 +32,7 @@ def menu_choice():
         print('Please re-enter a choice between 1-4')
 
 
-def endProgram():
+def end_program():
     end = input('Do you want to end the program? (Type Y for yes and N for No): ')
     if end == 'Y':
         exit()
@@ -54,7 +54,7 @@ def read_file():
                     file_list.append(row)
             return file_list
         except FileNotFoundError:
-            endProgram()
+            end_program()
             print('Please enter another csv file name again')
 
 #Displays the bank statement of the csv file the user inputted earlier
