@@ -22,9 +22,22 @@ def menu_choice():
     print('Type 3 to calculate the index of the file name and display it')
     print('Type 4 to end the program')
     print('----------------------------------------------------')
-    choice = int(input('Please enter your choice: '))
-    return choice
-    
+    try:
+        choice = int(input('Please enter your choice: '))
+        if choice < 1 or choice > 4:
+            print('Please re-enter a choice between 1-4')
+        else:
+            return choice
+    except ValueError:
+        print('Please re-enter a choice between 1-4')
+
+
+def endProgram():
+    end = input('Do you want to end the program? (Type Y for yes and N for No): ')
+    if end == 'Y':
+        exit()
+    if end == 'N':
+        pass
 
 # reads the file and returns a 2d list of the contents of the file before closing it
 # checks if the file is found in the system and also tells the user to input the correct file name again
@@ -41,6 +54,7 @@ def read_file():
                     file_list.append(row)
             return file_list
         except FileNotFoundError:
+            endProgram()
             print('Please enter another csv file name again')
 
 #Displays the bank statement of the csv file the user inputted earlier
@@ -117,24 +131,29 @@ def main():
     description()
     print()
     selection = menu_choice()
+
+    #Sets a flag for raw_statement to = None to be the primary choice before all other choices
     raw_statement = None
 
     # determines when to selection is over and when the other functions are called
     while selection != 4:
         if selection == 1:
+            #Reads the file and returns the list of contents as raw_statement
             raw_statement = read_file()
 
         elif selection == 2:
-            if raw_statement == 0:
+            if raw_statement == None:
                 print('Must choose choice 1 first')
             else:
                 print()
+                #Displays the bank statement based of the content list from raw_statement
                 bank_display(raw_statement)
                 print()
         elif selection == 3:
-            if raw_statement == 0:
+            if raw_statement == None:
                 print('Must choose choice 1 first')
             else:
+                #Calculates the index score based of raw_statement
                 score = calculate_index(raw_statement)
                 print()
                 print(f'Your index score is: {score}')
