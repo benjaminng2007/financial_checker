@@ -8,9 +8,7 @@ import csv
 
 def description():
     print('Your bank statement must be in a csv file and have the starting balance on the first row')
-    print('Bank statement only allows Balance, Housing, Food, Income, Utilities, Entertainment, Transport, and Healthcare in categories')
     print('Based of user input of the file location that lists the bank statement, this program will calculate the index.')
-    print('Housing, Utilities and Online Subscriptions is only accounted into the index score')
     print('Example Fake Bank Statement I used is in the github commited to the main branch')
     print('The file name should be copied as a path in your files for example C:\\Fake Bank Statement for Project Example\\Fake Bank Statement.csv then entered into terminal')
 
@@ -86,45 +84,46 @@ def bank_display(list2d):
         print(row_string)
 
 def calculate_index(contents):
-    debt_row = []
-
-
-    for row in contents:
-        #detects if the category is a debt and adds it to debt_row to allow only debt rows
-        if 'Housing' in row or 'Utilities' in row or 'Online Subscriptions' in row:
-            debt_row.append(row)
-
-    #only adds the income to the net income by determining the difference in previous balances and after balances
-    totals = []
-    net_income = 0
-
-    for row in contents:
-        totals.append(row[6])
-
-    totals.pop(0)
-
-    for i in range(1, len(totals)):
-        after_totals = float(totals[i])
-        before_totals = float(totals[i - 1])
-        print(after_totals, before_totals)
-
-        difference = after_totals - before_totals
-        print(difference)
-
-        if difference > 0:
-            net_income += difference
-
-    #Estimates the gross income based of the net income using the formula of the net_income / (1-0.25)
-    gross_income = net_income / (1-0.25)
-
-    #Adds all the debt from the debt_row into debt
     debt = 0
-    for negative_money in debt_row:
-        debt += float(negative_money[4])
+    income = 0
 
-    #calculates the index score based of the formula of the (debt/ gross_income) * 100 and returns the score
+    #goes through the credit and debit rows and removes all the whitespace to check for later
+    for row in contents[1:]:
+
+        debit = row[4].strip()
+        net_income = row[5].strip()
+
+        #checks if the debit has a empty string or not and adds it to deb
+        if debit:
+            debt += float(debit)
+
+        #checks if the net_income has a empty string or not and adds it to income
+        if net_income:
+            income += float(net_income)
+
+    #calculates gross_income that is used for index_score
+    gross_income = income  / (1-0.25)
+
+    #calculates the  index_score
     index_score = (debt / gross_income) * 100
+    how_index(index_score)
     return f'{index_score:.2f}'
+
+#This function tells if your index score is highly manageable or closer to the danger zone
+def how_index(score):
+    if score < 35:
+        print('Your index score means your debt is highly manageable')
+
+    if 36 < score < 43:
+        print('Your debt is within normal boundaries')
+
+    if 44 < score < 49:
+        print('Your budget is getting tightly stretched, meaning any sudden financial stress can cause missed payments')
+
+
+    if score > 50:
+        print('Your debt too gross income ratio is in the danger zone, meaning you have to rely on credit.\n This usually means you can\'t take out loans.')
+
 
 
 def main():
